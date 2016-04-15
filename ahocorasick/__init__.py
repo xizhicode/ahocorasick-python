@@ -8,9 +8,7 @@ class Node(object):
         self.is_word = is_word
         self.str = str
         self.parent = None
-        ##
         self.branchlist = []
-        ##
 
     def append(self, keyword):
         assert len(keyword) > 0
@@ -67,27 +65,22 @@ class AhoCorasick(object):
                             node[i].fail = self._root[i]
                         else:
                             node[i].fail = self._root
-                    # ###############################
                     parentlist = self._get_all_parentnode(node[i])[1:]
                     for index, j in enumerate(parentlist):
                         if self._root.next_p.has_key(j.str):
                             try:
                                 _startnode = self._root
-                                # print "#",[_i.str  for _i in   parentlist[index:] + [node[i]]]
-                                # print "test",[_i.str for _i in  parentlist[index:] + [node[i]]]
                                 for _l in parentlist[index:] + [node[i]]:
                                     _startnode = _startnode.__getitem__(_l.str)
                                 assert _startnode.is_word
                                 node[i].branchlist.append(_startnode)
                             except Exception as e:
-                                # print e.message
                                 pass
                         else:
                             pass
-                            # ###############################################
                 _handlesun(node[i])
 
-        self._root.fail = self._root  # root node fail node is self
+        self._root.fail = self._root  
         for i in self._root:
             self._root[i].fail = self._root
             _handlesun(self._root[i])
@@ -111,7 +104,7 @@ class AhoCorasick(object):
         index = 0
         for i in content:
             while 1:
-                if node == self._root:   # 走到root
+                if node == self._root:   
                     if not  node.next_p.has_key(i):
                         break
                     else:
@@ -119,8 +112,8 @@ class AhoCorasick(object):
                         if node.is_word:
                             result.add(i)
                         break
-                else:    # 走出root
-                    if node.next_p.has_key(i): # 匹配上
+                else:    
+                    if node.next_p.has_key(i): 
                         node = node.next_p[i]
                         if node.is_word:
                             match_case(node)
@@ -129,7 +122,7 @@ class AhoCorasick(object):
                                 for n in m.branchlist:
                                     match_case(n)
                         break
-                    else:  # 失配
+                    else:  
                         parentnode=self._get_all_parentnode(node, False)+[node]
                         for m in parentnode:
                             for n in m.branchlist:
