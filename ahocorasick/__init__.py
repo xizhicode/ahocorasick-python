@@ -89,17 +89,28 @@ class AhoCorasick(object):
                     and i.str in i.parent.fail.fail.next_p.keys():
                 i.fail = i.parent.fail.fail[i.str]
 
-    def search(self, content):
+    def search(self, content,with_index=False):
         result = set()
         node = self._root
-        def match_case(node, root=self._root):
+        def match_case(node, current_index=None):
+            if  current_index==None:
+                current_index=index
+            else:
+                pass
+            parent_times=0
             string = ''
+            _len=-1
             while node != self._root:
-                string += node.str
+                string = node.str +string
+                _len+=1
                 node = node.parent
                 if node.is_word:
-                    match_case(node)
-            result.add(string[::-1])
+                    parent_times+=1
+                    match_case(node,current_index=current_index-parent_times)
+            if not  with_index:
+                result.add(string)
+            else:
+                result.add((string,(current_index-_len,current_index+1)))
 
         index = 0
         for i in content:
@@ -110,24 +121,28 @@ class AhoCorasick(object):
                     else:
                         node=self._root[i]
                         if node.is_word:
-                            result.add(i)
+                            if with_index:
+                                result.add((i,(index,index+1)))
+                            else:
+                                result.add(i)
                         break
                 else:    
                     if node.next_p.has_key(i): 
                         node = node.next_p[i]
                         if node.is_word:
-                            match_case(node)
-                            parentnode = self._get_all_parentnode(node, False)+[node]
-                            for m in parentnode:
+                            match_case(node,current_index=index)
+                            parentnode = [node]+ self._get_all_parentnode(node, False)
+                            for _,m in enumerate(parentnode):
                                 for n in m.branchlist:
-                                    match_case(n)
+                                    match_case(n,current_index=index-_)
                         break
                     else:  
-                        parentnode=self._get_all_parentnode(node, False)+[node]
-                        for m in parentnode:
+                        parentnode=[node]+ self._get_all_parentnode(node, False)
+                        for _,m in enumerate(parentnode):
                             for n in m.branchlist:
-                                match_case(n)
+                                match_case(n,current_index=index-_)
                         node=node.fail
                         continue
             index += 1
         return result
+
