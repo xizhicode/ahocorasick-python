@@ -8,5 +8,5 @@ from setuptools import setup, find_packages
 setup(
         name="ahocorasick-python",
         packages=["ahocorasick"],
-        version='0.0.1'
+        version='0.0.2'
 )
