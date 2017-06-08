@@ -17,5 +17,7 @@ setup(
         url='https://github.com/zhoukunpeng504/ahocorasick-python',
         author="zhoukunpeng",
         author_email="zhoukunpeng504@163.com",
-
+        package_data={
+            '': ['*.rst'],
+        }
 )
