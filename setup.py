@@ -11,7 +11,7 @@ with open("README.rst","r") as f:
 setup(
         name="ahocorasick-python",
         packages=["ahocorasick"],
-        version='0.0.3',
+        version='0.0.4',
         description="this project is a aho-corasick automaton implementation by python",
         long_description=long_description,
         url='https://github.com/zhoukunpeng504/ahocorasick-python',
