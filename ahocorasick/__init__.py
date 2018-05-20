@@ -106,7 +106,7 @@ class AhoCorasick(object):
                 node = node.parent
                 if node.is_word:
                     parent_times+=1
-                    match_case(node,current_index=current_index-parent_times)
+                    match_case(node,current_index=current_index-parent_times-1)
             if not  with_index:
                 result.add(string)
             else:
