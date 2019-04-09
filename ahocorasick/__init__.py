@@ -35,7 +35,7 @@ class AhoCorasick(object):
     def __init__(self, *words):
         self.words = words
         self._root = Node(is_root=True)
-        map(self._root.append, self.words)
+        list(map(self._root.append, self.words))
         self._make()
 
     def _get_all_parentnode(self, node, root_start=True):
@@ -53,21 +53,21 @@ class AhoCorasick(object):
 
         def _handlesun(node):
             for i in node:
-                if node[i].next_p.keys() == []:
+                if not node[i].next_p.keys():
                     _endnodelist.append(node[i])
                 if node == self._root:
                     pass
                 else:
-                    if node.fail.next_p.has_key(i):
+                    if i in node.fail.next_p:
                         node[i].fail = node.fail.next_p[i]
                     else:
-                        if self._root.next_p.has_key(i):
+                        if i in self._root.next_p:
                             node[i].fail = self._root[i]
                         else:
                             node[i].fail = self._root
                     parentlist = self._get_all_parentnode(node[i])[1:]
                     for index, j in enumerate(parentlist):
-                        if self._root.next_p.has_key(j.str):
+                        if j.str in self._root.next_p:
                             try:
                                 _startnode = self._root
                                 for _l in parentlist[index:] + [node[i]]:
@@ -80,7 +80,7 @@ class AhoCorasick(object):
                             pass
                 _handlesun(node[i])
 
-        self._root.fail = self._root  
+        self._root.fail = self._root
         for i in self._root:
             self._root[i].fail = self._root
             _handlesun(self._root[i])
@@ -89,60 +89,65 @@ class AhoCorasick(object):
                     and i.str in i.parent.fail.fail.next_p.keys():
                 i.fail = i.parent.fail.fail[i.str]
 
-    def search(self, content,with_index=False):
+    def search(self, content, with_index=False):
         result = set()
         node = self._root
+
         def match_case(node, current_index=None):
-            if  current_index==None:
-                current_index=index
+            if current_index == None:
+                current_index = index
             else:
                 pass
-            parent_times=0
+            parent_times = 0
             string = ''
-            _len=-1
+            _len = -1
             while node != self._root:
-                string = node.str +string
-                _len+=1
+                string = node.str + string
+                _len += 1
                 node = node.parent
                 if node.is_word:
-                    parent_times+=1
-                    match_case(node,current_index=current_index-parent_times-1)
-            if not  with_index:
+                    parent_times += 1
+                    match_case(node, current_index=current_index - parent_times - 1)
+            if not with_index:
                 result.add(string)
             else:
-                result.add((string,(current_index-_len,current_index+1)))
+                result.add((string, (current_index - _len, current_index + 1)))
 
         index = 0
         for i in content:
             while 1:
-                if node == self._root:   
-                    if not  node.next_p.has_key(i):
+                if node == self._root:
+                    if i not in node.next_p:
                         break
                     else:
-                        node=self._root[i]
+                        node = self._root[i]
                         if node.is_word:
                             if with_index:
-                                result.add((i,(index,index+1)))
+                                result.add((i, (index, index + 1)))
                             else:
                                 result.add(i)
                         break
-                else:    
-                    if node.next_p.has_key(i): 
+                else:
+                    if i in node.next_p:
                         node = node.next_p[i]
                         if node.is_word:
-                            match_case(node,current_index=index)
-                            parentnode = [node]+ self._get_all_parentnode(node, False)
-                            for _,m in enumerate(parentnode):
+                            match_case(node, current_index=index)
+                            parentnode = [node] + self._get_all_parentnode(node, False)
+                            for _, m in enumerate(parentnode):
                                 for n in m.branchlist:
-                                    match_case(n,current_index=index-_)
+                                    match_case(n, current_index=index - _)
                         break
-                    else:  
-                        parentnode=[node]+ self._get_all_parentnode(node, False)
-                        for _,m in enumerate(parentnode):
+                    else:
+                        parentnode = [node] + self._get_all_parentnode(node, False)
+                        for _, m in enumerate(parentnode):
                             for n in m.branchlist:
-                                match_case(n,current_index=index-_)
-                        node=node.fail
+                                match_case(n, current_index=index - _)
+                        node = node.fail
                         continue
             index += 1
         return result
 
+
+if __name__ == '__main__':
+    ac = AhoCorasick("test", 'oo', 'ok')
+    print(ac.search('test book'))
