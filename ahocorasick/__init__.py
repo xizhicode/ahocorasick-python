@@ -78,11 +78,9 @@ class AhoCorasick(object):
         构造Ac树
         :return:
         """
-        print(self._node_all)
         for _level, node in self._node_all:
             if node == self._root or _level <= 1:
                 node.fail = self._root
-                print(node,node.fail)
             else:
                 _node = node.parent.fail
                 while True:
@@ -101,9 +99,7 @@ class AhoCorasick(object):
         node = self._root
         index = 0
         for i in content:
-            print(i)
             while 1:
-                print(node, node.str,node.fail)
                 if i not in node:
                     if node == self._root:
                         break
