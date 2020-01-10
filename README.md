@@ -47,3 +47,12 @@ print(tree.search("test book",True)) # 检索
 ```python
 {('k', (8, 9)), ('book', (5, 9)), ('oo', (6, 8)), ('ok', (7, 9)), ('test', (0, 4))}
 ```
+### 3.参考资料
+
+- [ac自动机算法详解](https://blog.csdn.net/bestsort/article/details/82947639)
+- [ac自动机](https://blog.csdn.net/weixin_40317006/article/details/81327188)
+
+### 4.联系我
+
+QQ:   943489924<br/>
+邮箱：<zhoukunpeng504@163.com>
