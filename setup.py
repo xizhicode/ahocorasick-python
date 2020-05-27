@@ -11,7 +11,7 @@ with open("README.md", "r") as f:
 setup(
     name="ahocorasick-python",
     packages=["ahocorasick"],
-    version='0.0.7',
+    version='0.0.8',
     description="this project is a aho-corasick automaton implementation by python",
     long_description=long_description,
     long_description_content_type="text/markdown",

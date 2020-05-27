@@ -4,7 +4,7 @@ from collections import defaultdict
 
 class Node(object):
     """
-    节点的抽象
+    node
     """
     def __init__(self, str='', is_root=False):
         self._next_p = {}
@@ -74,7 +74,7 @@ class AhoCorasick(object):
 
     def _make(self):
         """
-        构造Ac树
+        build ac tree
         :return:
         """
         for _level, node in self._node_all:
