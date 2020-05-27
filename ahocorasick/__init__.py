@@ -1,6 +1,6 @@
 # coding:utf-8
 # write by zhou
-
+from collections import defaultdict
 
 class Node(object):
     """
@@ -40,7 +40,7 @@ class AhoCorasick(object):
         self.words = list(self.words_set)
         self.words.sort(key=lambda x: len(x))
         self._root = Node(is_root=True)
-        self._node_meta = {}
+        self._node_meta = defaultdict(set)
         self._node_all = [(0, self._root)]
         _a = {}
         for word in self.words:
@@ -58,7 +58,6 @@ class AhoCorasick(object):
                 else:
                     _[k] = node
                     self._node_all.append((_i+1, _[k]))
-                self._node_meta.setdefault(id(_[k]),set())
                 if _i >= 1:
                     for _j in _a[k]:
                         if keyword[:_i+1].endswith(_j):
