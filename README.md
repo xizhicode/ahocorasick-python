@@ -54,6 +54,8 @@ print(tree.search("test book",True)) # 检索
 - [ac自动机](https://blog.csdn.net/weixin_40317006/article/details/81327188)
 
 ### 4.联系我
-
 QQ:   943489924<br/>
 邮箱：<zhoukunpeng504@163.com>
+
+### 5. 注意
+如果在windows平台上遇到了编码问题，删除所有的中文即可。
