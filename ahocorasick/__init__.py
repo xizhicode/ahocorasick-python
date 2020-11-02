@@ -33,7 +33,7 @@ class Node(object):
 
 class AhoCorasick(object):
     """
-    Ac自动机对象
+    Ac object
     """
     def __init__(self, *words):
         self.words_set = set(words)
