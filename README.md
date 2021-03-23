@@ -4,7 +4,7 @@
 ![python](https://raw.githubusercontent.com/xizhicode/tinydns/master/docs/svgs/python-2.6%7C2.7%7C3.4%7C3.5%7C3.6%7C3.7%7C3.8-blue.svg?sanitize=true)
 <br/><br/>
 ac自动机python的实现，可用于python2 python3等主流python发行版，对标准的ac自动机算法进行了完善 优化(主要是改进了结果的准确性)。<br/>
-注意：为了保证结果的准确性，请安装使用最新版(0.0.8)。
+注意：为了保证结果的准确性，请安装使用最新版(0.0.9)。
 
 
 
